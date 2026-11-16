@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PrintHub: print quotes, branding, websites</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef3f6;--ink:#10212b;--card:#fff;--c:#0098c7;--m:#d6246e;--y:#f5c400;--line:#c9d6dd}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1a22;--ink:#e8f0f4;--card:#16262f;--line:#2a3f4b}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'Bricolage Grotesque',system-ui,sans-serif}
+main{max-width:1040px;margin:auto;padding:28px 18px 60px}
+h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1;margin:.2em 0;font-weight:800;letter-spacing:-.03em}
+.reg{display:flex;gap:6px;margin-bottom:10px}.reg i{width:22px;height:22px;border-radius:50%;display:block}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:22px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.box{background:var(--card);border:2px solid var(--ink);border-radius:6px;padding:20px}
+label{display:block;font-weight:600;margin:12px 0 4px}
+input,select,button{font:inherit;width:100%;padding:11px;border:2px solid var(--ink);border-radius:4px;background:var(--card);color:var(--ink)}
+input[type=checkbox]{width:auto;margin-right:8px}
+button{background:var(--ink);color:var(--bg);font-weight:700;cursor:pointer;margin-top:14px}button.pay{background:var(--m);color:#fff;border-color:var(--m)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.total{font-size:2.4rem;font-weight:800}.msg{margin-top:10px;font-weight:600}.soon{border-style:dashed;margin-bottom:14px}
+.soon b{display:block}
+</style></head><body><main>
+<div class="reg" aria-hidden="true"><i style="background:var(--c)"></i><i style="background:var(--m)"></i><i style="background:var(--y)"></i></div>
+<h1>Get your print quote in seconds.</h1>
+<p>Prices in KES. Pay a 50% deposit by M-Pesa and we start printing.</p>
+<div class="grid">
+<section class="box" aria-labelledby="q">
+<h2 id="q" style="margin:0">Quote</h2>
+<form id="f">
+<label for="product">Product</label><select id="product"></select>
+<label for="qty">Quantity</label><input id="qty" type="number" min="1" value="100" required>
+<label for="finish">Finish</label><select id="finish"></select>
+<label><input id="design" type="checkbox">I need design help</label>
+<label for="name">Your name</label><input id="name" required autocomplete="name">
+<label for="phone">M-Pesa phone number</label><input id="phone" inputmode="tel" placeholder="0712345678" autocomplete="tel">
+<button>Get my quote</button>
+</form></section>
+<section>
+<div class="box" id="res" aria-live="polite"><p style="margin:0">Your price will show here.</p></div>
+<div class="box soon" style="margin-top:14px"><b>Websites and domains</b>Build your own site and register a .co.ke domain. Coming soon.</div>
+</section></div>
+<script>
+const $=id=>document.getElementById(id);let quote=null;
+fetch('/api/quote').then(r=>r.json()).then(d=>{
+ $('product').innerHTML=Object.entries(d.products).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+ $('finish').innerHTML=d.finishes.map(x=>`<option>${x}</option>`).join('')});
+const kes=n=>'KES '+n.toLocaleString('en-KE');
+$('f').onsubmit=async e=>{e.preventDefault();
+ const r=await fetch('/api/quote',{method:'POST',body:JSON.stringify({product:$('product').value,qty:$('qty').value,finish:$('finish').value,design:$('design').checked,name:$('name').value,phone:$('phone').value})});
+ const d=await r.json();
+ if(!r.ok){$('res').innerHTML=`<p class="msg">${d.error}</p>`;return}
+ quote=d;$('res').innerHTML=`<div class="total">${kes(d.total)}</div><p>Deposit now: <b>${kes(d.deposit)}</b></p><button class="pay" id="pay">Pay deposit with M-Pesa</button><p class="msg" id="pm"></p>`;
+ $('pay').onclick=async()=>{$('pm').textContent='Sending request to your phone...';
+  const r=await fetch('/api/mpesa',{method:'POST',body:JSON.stringify({id:quote.id,phone:$('phone').value})});
+  const x=await r.json();$('pm').textContent=x.message||x.error}};
+</script></main></body></html>
