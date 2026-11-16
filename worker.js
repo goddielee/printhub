@@ -2,8 +2,9 @@
 import * as quote from './functions/api/quote.js';
 import * as mpesa from './functions/api/mpesa.js';
 import * as callback from './functions/api/callback.js';
+import * as admin from './functions/api/admin.js';
 
-const routes = { '/api/quote': quote, '/api/mpesa': mpesa, '/api/callback': callback };
+const routes = { '/api/quote': quote, '/api/mpesa': mpesa, '/api/callback': callback, '/api/admin': admin };
 
 export default {
   async fetch(request, env) {
