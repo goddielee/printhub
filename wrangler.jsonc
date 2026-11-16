@@ -7,6 +7,10 @@
     "binding": "ASSETS",
     "run_worker_first": ["/api/*"]
   },
+  "vars": {
+    "MPESA_ENV": "sandbox",
+    "MPESA_SHORTCODE": "174379"
+  },
   "d1_databases": [
     { "binding": "DB", "database_name": "printhub", "database_id": "9c03dfde-d865-4332-b7ae-7ccf86e79e03" }
   ]
