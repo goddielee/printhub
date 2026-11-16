@@ -8,6 +8,6 @@
     "run_worker_first": ["/api/*"]
   },
   "d1_databases": [
-    { "binding": "DB", "database_name": "printhub", "database_id": "PASTE_YOUR_D1_DATABASE_ID_HERE" }
+    { "binding": "DB", "database_name": "printhub", "database_id": "9c03dfde-d865-4332-b7ae-7ccf86e79e03" }
   ]
 }
