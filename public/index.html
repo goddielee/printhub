@@ -1,27 +1,27 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PrintHub: print quotes, branding, websites</title>
+<title>Epitome Designs: print quotes, branding, websites</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#eef3f6;--ink:#10212b;--card:#fff;--c:#0098c7;--m:#d6246e;--y:#f5c400;--line:#c9d6dd}
-@media(prefers-color-scheme:dark){:root{--bg:#0e1a22;--ink:#e8f0f4;--card:#16262f;--line:#2a3f4b}}
+:root{--bg:#f7f2f3;--ink:#2a1218;--card:#fff;--c:#7a1f3d;--m:#7a1f3d;--y:#b8955a;--line:#e3d3d7}
+@media(prefers-color-scheme:dark){:root{--bg:#1c0f14;--ink:#f3e8eb;--card:#2a1820;--c:#d98aa3;--m:#9c2a50;--line:#4a2a35}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'Bricolage Grotesque',system-ui,sans-serif}
 main{max-width:1040px;margin:auto;padding:28px 18px 60px}
 h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1;margin:.2em 0;font-weight:800;letter-spacing:-.03em}
-.reg{display:flex;gap:6px;margin-bottom:10px}.reg i{width:22px;height:22px;border-radius:50%;display:block}
+.brand{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:3px solid var(--m)}.brand img{height:48px;width:auto}.brand span{font-size:1.25rem;font-weight:800;letter-spacing:-.01em}
 .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:22px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
 .box{background:var(--card);border:2px solid var(--ink);border-radius:6px;padding:20px}
 label{display:block;font-weight:600;margin:12px 0 4px}
 input,select,button{font:inherit;width:100%;padding:11px;border:2px solid var(--ink);border-radius:4px;background:var(--card);color:var(--ink)}
 input[type=checkbox]{width:auto;margin-right:8px}
-button{background:var(--ink);color:var(--bg);font-weight:700;cursor:pointer;margin-top:14px}button.pay{background:var(--m);color:#fff;border-color:var(--m)}
+button{background:var(--ink);color:var(--bg);font-weight:700;cursor:pointer;margin-top:14px}button.pay{background:var(--m);color:#fff;border-color:var(--m)}.box{border-top:6px solid var(--m)}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--c);outline-offset:2px}
 .total{font-size:2.4rem;font-weight:800}.msg{margin-top:10px;font-weight:600}.soon{border-style:dashed;margin-bottom:14px}
 .soon b{display:block}
 </style></head><body><main>
-<div class="reg" aria-hidden="true"><i style="background:var(--c)"></i><i style="background:var(--m)"></i><i style="background:var(--y)"></i></div>
+<header class="brand"><img src="/logo.png" alt="Epitome Designs logo" onerror="this.remove()"><span>Epitome Designs</span></header>
 <h1>Get your print quote in seconds.</h1>
 <p>Prices in KES. Pay a 50% deposit by M-Pesa and we start printing.</p>
 <div class="grid">
