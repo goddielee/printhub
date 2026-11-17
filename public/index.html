@@ -1,27 +1,21 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en"><head><link rel="icon" href="/favicon.png"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Epitome Designs: print quotes, branding, websites</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#f7f2f3;--ink:#2a1218;--card:#fff;--c:#7a1f3d;--m:#7a1f3d;--y:#b8955a;--line:#e3d3d7}
-@media(prefers-color-scheme:dark){:root{--bg:#1c0f14;--ink:#f3e8eb;--card:#2a1820;--c:#d98aa3;--m:#9c2a50;--line:#4a2a35}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'Bricolage Grotesque',system-ui,sans-serif}
-main{max-width:1040px;margin:auto;padding:28px 18px 60px}
-h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1;margin:.2em 0;font-weight:800;letter-spacing:-.03em}
-.brand{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:3px solid var(--m)}.brand img{height:48px;width:auto}.brand span{font-size:1.25rem;font-weight:800;letter-spacing:-.01em}
-.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:22px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
-.box{background:var(--card);border:2px solid var(--ink);border-radius:6px;padding:20px}
-label{display:block;font-weight:600;margin:12px 0 4px}
-input,select,button{font:inherit;width:100%;padding:11px;border:2px solid var(--ink);border-radius:4px;background:var(--card);color:var(--ink)}
-input[type=checkbox]{width:auto;margin-right:8px}
-button{background:var(--ink);color:var(--bg);font-weight:700;cursor:pointer;margin-top:14px}button.pay{background:var(--m);color:#fff;border-color:var(--m)}.box{border-top:6px solid var(--m)}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--c);outline-offset:2px}
-.total{font-size:2.4rem;font-weight:800}.msg{margin-top:10px;font-weight:600}.soon{border-style:dashed;margin-bottom:14px}
-.soon b{display:block}
-</style></head><body><main>
-<header class="brand"><img src="/logo.png" alt="Epitome Designs logo" onerror="this.remove()"><span>Epitome Designs</span></header>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>:root{--brand:#841813;--brand2:#59100c;--bg:#faf6f4;--ink:#1e1412;--card:#fff;--line:#e6dad6;--muted:#6f5f5a}@media(prefers-color-scheme:dark){:root{--brand:#b5342a;--brand2:#7a1d16;--bg:#171110;--ink:#f4ebe8;--card:#241a18;--line:#3b2c29;--muted:#b3a09b}}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Raleway',system-ui,sans-serif}
+.brand{background:linear-gradient(90deg,var(--brand2),var(--brand));padding:14px 18px}.brand div{max-width:1040px;margin:auto;color:#fff;font-size:1.3rem}.brand img{height:46px;width:auto;display:block}
+input,select,button{font:inherit;border:1.5px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+button{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:700;cursor:pointer;transition:filter .15s}button:hover{filter:brightness(1.12)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 45%,transparent);outline-offset:2px}main{max-width:1040px;margin:auto;padding:30px 18px 60px}
+h1{font-size:clamp(2rem,5.5vw,3.4rem);line-height:1.05;margin:.1em 0 .2em;font-weight:800;letter-spacing:-.025em}h1+p{color:var(--muted);margin:0;font-size:1.05rem}h2{font-size:1.25rem;margin:0}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:24px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--brand);border-radius:10px;padding:22px;box-shadow:0 6px 20px rgba(30,20,18,.06)}
+label{display:block;font-weight:600;margin:14px 0 5px;font-size:.92rem}input,select,button{width:100%;padding:11px 12px}input[type=checkbox]{width:auto;margin-right:8px;accent-color:var(--brand)}
+button{margin-top:16px}.total{font-size:2.5rem;font-weight:800}.msg{margin-top:10px;font-weight:600}.soon{border-top-style:dashed;color:var(--muted)}.soon b{display:block;color:var(--ink)}
+.row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.row span:first-child{flex:1;word-break:break-all}.row button{width:auto;margin:0;padding:6px 14px}.note{font-size:.85rem;color:var(--muted)}</style></head><body><header class="brand"><div><img src="/logo-white.png" alt="Epitome Designs" onerror="this.replaceWith(Object.assign(document.createElement('b'),{textContent:'Epitome Designs'}))"></div></header><main>
+
 <h1>Get your print quote in seconds.</h1>
 <p>Prices in KES. Pay a 50% deposit by M-Pesa and we start printing.</p>
 <div class="grid">
@@ -38,7 +32,10 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </form></section>
 <section>
 <div class="box" id="res" aria-live="polite"><p style="margin:0">Your price will show here.</p></div>
-<div class="box soon" style="margin-top:14px"><b>Websites and domains</b>Build your own site and register a .co.ke domain. Coming soon.</div>
+<div class="box" style="margin-top:14px"><h2 style="margin:0">Find your domain</h2>
+<label for="dq">Business name or idea</label><input id="dq" placeholder="mybrand">
+<button id="ds" type="button">Search</button><div id="dr" aria-live="polite"></div></div>
+<div class="box soon" style="margin-top:14px"><b>Website builder</b>Build your own site. Coming soon.</div>
 </section></div>
 <script>
 const $=id=>document.getElementById(id);let quote=null;
@@ -50,8 +47,19 @@ $('f').onsubmit=async e=>{e.preventDefault();
  const r=await fetch('/api/quote',{method:'POST',body:JSON.stringify({product:$('product').value,qty:$('qty').value,finish:$('finish').value,design:$('design').checked,name:$('name').value,phone:$('phone').value})});
  const d=await r.json();
  if(!r.ok){$('res').innerHTML=`<p class="msg">${d.error}</p>`;return}
- quote=d;$('res').innerHTML=`<div class="total">${kes(d.total)}</div><p>Deposit now: <b>${kes(d.deposit)}</b></p><button class="pay" id="pay">Pay deposit with M-Pesa</button><p class="msg" id="pm"></p>`;
+ quote=d;$('res').innerHTML=`<div class="total">${kes(d.total)}</div><p>Deposit now: <b>${kes(d.deposit)}</b></p><button id="pay">Pay deposit with M-Pesa</button><p class="msg" id="pm"></p>`;
  $('pay').onclick=async()=>{$('pm').textContent='Sending request to your phone...';
   const r=await fetch('/api/mpesa',{method:'POST',body:JSON.stringify({id:quote.id,phone:$('phone').value})});
   const x=await r.json();$('pm').textContent=x.message||x.error}};
+
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+$('ds').onclick=async()=>{const r=await fetch('/api/domain?q='+encodeURIComponent($('dq').value));const d=await r.json();
+ if(!r.ok){$('dr').innerHTML=`<p class="msg">${esc(d.error)}</p>`;return}
+ $('dr').innerHTML=d.results.map(x=>`<div class="row"><span>${esc(x.domain)}</span><span>${x.status==='taken'?'Taken':kes(x.price)+'/yr'}</span>${x.status==='taken'?'':`<button type="button" data-d="${esc(x.domain)}">${x.status==='available'?'Order':'Request'}</button>`}</div>`).join('')+'<p class="note">Requests are confirmed by us before we register.</p>'};
+$('dr').onclick=e=>{const d=e.target.dataset.d;if(!d)return;
+ $('dr').innerHTML=`<p><b>${esc(d)}</b></p><label for="dn">Your name</label><input id="dn" autocomplete="name"><label for="dp">M-Pesa phone</label><input id="dp" inputmode="tel" placeholder="0712345678"><label for="de">Email</label><input id="de" type="email"><label for="dy">Years</label><select id="dy"><option>1</option><option>2</option><option>3</option></select><button type="button" id="dgo">Order ${esc(d)}</button><div id="dm" aria-live="polite"></div>`;
+ $('dgo').onclick=async()=>{const r=await fetch('/api/domain',{method:'POST',body:JSON.stringify({domain:d,name:$('dn').value,phone:$('dp').value,email:$('de').value,years:$('dy').value})});const x=await r.json();
+  if(!r.ok){$('dm').innerHTML=`<p class="msg">${esc(x.error)}</p>`;return}
+  $('dm').innerHTML=`<div class="total">${kes(x.total)}</div><p>Paid in full by M-Pesa.</p><button type="button" id="dpay">Pay with M-Pesa</button><p class="msg" id="dpm"></p>`;
+  $('dpay').onclick=async()=>{$('dpm').textContent='Sending request to your phone...';const r=await fetch('/api/mpesa',{method:'POST',body:JSON.stringify({id:x.id,phone:$('dp').value})});const y=await r.json();$('dpm').textContent=y.message||y.error}}};
 </script></main></body></html>

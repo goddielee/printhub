@@ -1,22 +1,17 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en"><head><link rel="icon" href="/favicon.png"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Epitome Designs: orders</title>
-<style>
-:root{--bg:#f7f2f3;--ink:#2a1218;--card:#fff;--c:#7a1f3d;--m:#7a1f3d;--line:#e3d3d7}
-@media(prefers-color-scheme:dark){:root{--bg:#1c0f14;--ink:#f3e8eb;--card:#2a1820;--c:#d98aa3;--m:#9c2a50;--line:#4a2a35}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,sans-serif}
-main{max-width:1100px;margin:auto;padding:20px 14px 50px}h1{margin:0 0 12px;padding-bottom:10px;border-bottom:3px solid var(--m)}
-.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-input,select,button{font:inherit;padding:9px;border:2px solid var(--ink);border-radius:4px;background:var(--card);color:var(--ink)}
-button{background:var(--ink);color:var(--bg);font-weight:700;cursor:pointer}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--c);outline-offset:2px}
-.wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;background:var(--card);min-width:760px}
-th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-.paid{color:#0a7a3b;font-weight:700}th{background:var(--m);color:#fff}#msg{font-weight:600;margin:8px 0}
-</style></head><body><main>
-<h1>Epitome Designs: Orders</h1>
+<style>:root{--brand:#841813;--brand2:#59100c;--bg:#faf6f4;--ink:#1e1412;--card:#fff;--line:#e6dad6;--muted:#6f5f5a}@media(prefers-color-scheme:dark){:root{--brand:#b5342a;--brand2:#7a1d16;--bg:#171110;--ink:#f4ebe8;--card:#241a18;--line:#3b2c29;--muted:#b3a09b}}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Raleway',system-ui,sans-serif}
+.brand{background:linear-gradient(90deg,var(--brand2),var(--brand));padding:14px 18px}.brand div{max-width:1040px;margin:auto;color:#fff;font-size:1.3rem}.brand img{height:46px;width:auto;display:block}
+input,select,button{font:inherit;border:1.5px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+button{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:700;cursor:pointer;transition:filter .15s}button:hover{filter:brightness(1.12)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 45%,transparent);outline-offset:2px}main{max-width:1100px;margin:auto;padding:22px 14px 50px}h1{margin:0 0 14px;font-size:1.8rem;font-weight:800}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}input,select,button{padding:9px 11px}
+.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;background:var(--card);min-width:760px}
+th{background:var(--brand);color:#fff}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.paid{color:#2e9e5e;font-weight:700}#msg{font-weight:600;margin:8px 0}</style></head><body><header class="brand"><div><img src="/logo-white.png" alt="Epitome Designs" onerror="this.replaceWith(Object.assign(document.createElement('b'),{textContent:'Epitome Designs'}))"></div></header><main>
+<h1>Orders</h1>
 <div class="bar">
 <input id="key" type="password" placeholder="Access key" aria-label="Access key">
 <button id="load">Load orders</button>
