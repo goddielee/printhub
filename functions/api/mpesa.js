@@ -15,7 +15,7 @@ export async function onRequestPost({ request, env }) {
       BusinessShortCode: env.MPESA_SHORTCODE,
       Password: btoa(env.MPESA_SHORTCODE + env.MPESA_PASSKEY + ts), Timestamp: ts,
       TransactionType: 'CustomerPayBillOnline', // use CustomerBuyGoodsOnline for a Till
-      Amount: Math.ceil(q.total / 2), PartyA: msisdn, PartyB: env.MPESA_SHORTCODE, PhoneNumber: msisdn,
+      Amount: q.finish === 'domain' ? q.total : Math.ceil(q.total / 2), PartyA: msisdn, PartyB: env.MPESA_SHORTCODE, PhoneNumber: msisdn,
       CallBackURL: new URL('/api/callback', request.url).href,
       AccountReference: 'QUOTE' + q.id, TransactionDesc: 'Print deposit' }) })).json();
   if (res.ResponseCode !== '0') return Response.json({ error: res.errorMessage || 'M-Pesa request failed.' }, { status: 502 });
