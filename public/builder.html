@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="icon" href="/favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Build your website | Epitome Designs</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#841813;--brand2:#59100c;--bg:#faf6f4;--ink:#1e1412;--card:#fff;--line:#e6dad6;--muted:#6f5f5a}
+@media(prefers-color-scheme:dark){:root{--brand:#b5342a;--brand2:#7a1d16;--bg:#171110;--ink:#f4ebe8;--card:#241a18;--line:#3b2c29;--muted:#b3a09b}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'Raleway',system-ui,sans-serif}
+.brand{background:linear-gradient(90deg,var(--brand2),var(--brand));padding:14px 18px}.brand img{height:46px;display:block;max-width:1200px;margin:auto}
+main{max-width:1200px;margin:auto;padding:22px 16px 50px}h1{margin:0 0 4px;font-size:1.9rem;font-weight:800}.sub{color:var(--muted);margin:0 0 16px}
+.grid{display:grid;grid-template-columns:380px 1fr;gap:20px}@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--brand);border-radius:10px;padding:18px}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.9rem}
+input,select,textarea,button{font:inherit;width:100%;padding:10px;border:1.5px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+input[type=color]{height:42px;padding:3px}textarea{min-height:80px;resize:vertical}
+button{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:700;cursor:pointer;margin-top:12px}button:hover{filter:brightness(1.12)}
+button.alt{background:var(--card);color:var(--ink);border-color:var(--ink)}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 45%,transparent);outline-offset:2px}
+iframe{width:100%;height:78vh;min-height:480px;border:1px solid var(--line);border-radius:10px;background:#fff}
+#msg{font-weight:600;margin-top:10px}#info{font-size:.85rem;color:var(--muted);word-break:break-all;margin-top:8px}
+</style></head><body>
+<header class="brand"><img src="/logo-white.png" alt="Epitome Designs"></header>
+<main><h1>Build your website</h1><p class="sub">Fill in your details and watch your site appear. Publish when you're happy.</p>
+<div class="grid"><section class="box" aria-label="Your details">
+<label for="owner">Your name</label><input id="owner" autocomplete="name">
+<label for="template">Style</label><select id="template"><option value="clean">Clean (white)</option><option value="bold">Bold (colour header)</option></select>
+<label for="color">Brand colour</label><input id="color" type="color" value="#841813">
+<label for="name">Business name</label><input id="name" maxlength="60">
+<label for="tagline">Tagline</label><input id="tagline" maxlength="120">
+<label for="about">About your business</label><textarea id="about" maxlength="800"></textarea>
+<label for="services">Services (one per line, up to 8)</label><textarea id="services"></textarea>
+<label for="phone">Phone / WhatsApp (also used for M-Pesa)</label><input id="phone" inputmode="tel" placeholder="0712345678">
+<label for="email">Email</label><input id="email" type="email">
+<label for="address">Address</label><input id="address" maxlength="120">
+<button id="save" type="button">Save draft</button>
+<button id="pub" type="button">Publish for KES 3,000 (M-Pesa)</button>
+<p id="msg" aria-live="polite"></p><p id="info"></p></section>
+<section><iframe id="pv" title="Live preview" sandbox=""></iframe></section></div>
+<script>
+const $=id=>document.getElementById(id),F=['name','tagline','about','services','phone','email','address','color','template'];
+const ok=(s,r)=>r.test(s||'');let site=null,status='draft';
+try{site=JSON.parse(localStorage.getItem('ph_site')||'null')}catch{}
+const q=new URLSearchParams(location.search);if(q.get('slug'))site={slug:q.get('slug'),key:q.get('key')};
+if(site&&!(ok(site.slug,/^[a-z0-9-]+$/)&&ok(site.key,/^[a-f0-9]+$/)))site=null;
+const data=()=>Object.fromEntries(F.map(k=>[k,$(k).value]));
+const post=b=>fetch('/api/site',{method:'POST',body:JSON.stringify(b)});
+let t;const prev=()=>{clearTimeout(t);t=setTimeout(async()=>{$('pv').srcdoc=await(await post({action:'preview',data:data()})).text()},350)};
+F.forEach(k=>$(k).addEventListener('input',prev));
+function info(){if(!site)return;const edit=`${location.origin}/builder.html?slug=${site.slug}&key=${site.key}`;
+ $('info').textContent=(status==='published'?'LIVE: '+location.origin+'/s/'+site.slug+'. ':'Draft. Goes live at '+location.origin+'/s/'+site.slug+' after payment. ')+'Bookmark this link to edit later: '+edit}
+async function load(){if(!site)return prev();
+ const r=await fetch(`/api/site?slug=${site.slug}&key=${site.key}`);if(!r.ok){site=null;return prev()}
+ const d=await r.json();status=d.status;F.forEach(k=>$(k).value=k==='services'?d.data.services.join('\n'):(d.data[k]??''));
+ $('owner').value=d.owner||'';info();prev()}
+async function save(){const r=await post({action:'save',data:data(),owner:$('owner').value,...(site||{})});const d=await r.json();
+ if(!r.ok){$('msg').textContent=d.error;return false}
+ site={slug:d.slug,key:d.key};try{localStorage.setItem('ph_site',JSON.stringify(site))}catch{}
+ $('msg').textContent='Saved.';info();return true}
+$('save').onclick=save;
+$('pub').onclick=async()=>{if(!await save())return;
+ const r=await post({action:'publish',slug:site.slug,key:site.key,phone:$('phone').value});const d=await r.json();
+ if(!r.ok){$('msg').textContent=d.error;return}
+ $('msg').textContent='Sending M-Pesa request to your phone...';
+ const m=await(await fetch('/api/mpesa',{method:'POST',body:JSON.stringify({id:d.id,phone:$('phone').value})})).json();
+ $('msg').textContent=m.message||m.error;if(!m.ok)return;
+ for(let i=0;i<30;i++){await new Promise(r=>setTimeout(r,4000));
+  const g=await(await fetch(`/api/site?slug=${site.slug}&key=${site.key}`)).json();
+  if(g.status==='published'){status='published';info();$('msg').textContent='Payment received. Your site is live!';return}}
+ $('msg').textContent='Still waiting for payment confirmation. Refresh in a minute.'};
+load();
+</script></main></body></html>
