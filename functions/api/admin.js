@@ -1,5 +1,5 @@
 // Owner-only endpoints. Protected by the ADMIN_TOKEN secret set in Cloudflare.
-const STATUSES = ['quoted', 'payment_submitted', 'deposit_paid', 'payment_failed', 'in_production', 'ready', 'delivered'];
+const STATUSES = ['quoted', 'payment_submitted', 'deposit_paid', 'payment_failed', 'in_production', 'ready', 'balance_paid', 'delivered'];
 const authorised = (request, env) => {
   const t = (request.headers.get('Authorization') || '').replace('Bearer ', '');
   return !!env.ADMIN_TOKEN && t.length === env.ADMIN_TOKEN.length && t === env.ADMIN_TOKEN;
