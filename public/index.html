@@ -69,6 +69,7 @@ label{display:block;font-weight:600;margin:14px 0 5px;font-size:.92rem}.box inpu
 <div class="box" style="margin-top:14px"><h2>Build your website</h2><p class="note" style="margin:6px 0 0">Pick a style, add your details, preview it live and publish for KES 3,000.</p><a class="lnk" href="/builder.html">Start building</a></div>
 </section></div></main>
 <footer class="foot"><img src="/logo-white.png" alt="Epitome Designs"><p>Design, print and web, all in one place.</p></footer>
+<script src="/paybox.js"></script>
 <script>
 const WA='254710719980'; // Your WhatsApp number in international format with no + or spaces, e.g. '254712345678'. The green chat button appears once this is set.
 const $=id=>document.getElementById(id);
@@ -104,10 +105,7 @@ $('f').onsubmit=async e=>{e.preventDefault();
  const r=await fetch('/api/quote',{method:'POST',body:JSON.stringify({product:$('product').value,qty:$('qty').value,finish:$('finish').value,design:$('design').checked,name:$('name').value,phone:$('phone').value})});
  const d=await r.json();
  if(!r.ok){$('res').innerHTML=`<p class="msg">${esc(d.error)}</p>`;return}
- quote=d;$('res').innerHTML=`<div class="total">${kes(d.total)}</div><p>Deposit now: <b>${kes(d.deposit)}</b></p><button id="pay">Pay deposit with M-Pesa</button><p class="msg" id="pm"></p>`;
- $('pay').onclick=async()=>{$('pm').textContent='Sending request to your phone...';
-  const r=await fetch('/api/mpesa',{method:'POST',body:JSON.stringify({id:quote.id,phone:$('phone').value})});
-  const x=await r.json();$('pm').textContent=x.message||x.error}};
+ quote=d;$('res').innerHTML=`<div class="total">${kes(d.total)}</div><p>Deposit now: <b>${kes(d.deposit)}</b></p><div id="pbx"></div>`;payBox($('pbx'),d.id,d.deposit)};
 $('ds').onclick=async()=>{const r=await fetch('/api/domain?q='+encodeURIComponent($('dq').value));const d=await r.json();
  if(!r.ok){$('dr').innerHTML=`<p class="msg">${esc(d.error)}</p>`;return}
  $('dr').innerHTML=d.results.map(x=>`<div class="row"><span>${esc(x.domain)}</span><span>${x.status==='taken'?'Taken':kes(x.price)+'/yr'+(x.status==='likely'?'<br><small>To be confirmed</small>':'')}</span>${x.status==='taken'?'':`<button type="button" data-d="${esc(x.domain)}">${x.status==='available'?'Order':'Request'}</button>`}</div>`).join('')+'<p class="note">Domains marked To be confirmed are checked with the registry by us before we register them.</p>'};
@@ -115,8 +113,7 @@ $('dr').onclick=e=>{const d=e.target.dataset.d;if(!d)return;
  $('dr').innerHTML=`<p><b>${esc(d)}</b></p><label for="dn">Your name</label><input id="dn" autocomplete="name"><label for="dp">M-Pesa phone</label><input id="dp" inputmode="tel" placeholder="0712345678"><label for="de">Email</label><input id="de" type="email"><label for="dy">Years</label><select id="dy"><option>1</option><option>2</option><option>3</option></select><button type="button" id="dgo">Order ${esc(d)}</button><div id="dm" aria-live="polite"></div>`;
  $('dgo').onclick=async()=>{const r=await fetch('/api/domain',{method:'POST',body:JSON.stringify({domain:d,name:$('dn').value,phone:$('dp').value,email:$('de').value,years:$('dy').value})});const x=await r.json();
   if(!r.ok){$('dm').innerHTML=`<p class="msg">${esc(x.error)}</p>`;return}
-  $('dm').innerHTML=`<div class="total">${kes(x.total)}</div><p>Paid in full by M-Pesa.</p><button type="button" id="dpay">Pay with M-Pesa</button><p class="msg" id="dpm"></p>`;
-  $('dpay').onclick=async()=>{$('dpm').textContent='Sending request to your phone...';const r=await fetch('/api/mpesa',{method:'POST',body:JSON.stringify({id:x.id,phone:$('dp').value})});const y=await r.json();$('dpm').textContent=y.message||y.error}}};
+  $('dm').innerHTML=`<div class="total">${kes(x.total)}</div><p>Paid in full.</p><div id="dpx"></div>`;payBox($('dpx'),x.id,x.total)}};
 if(/^\d{11,13}$/.test(WA)){const a=document.createElement('a');a.className='wa';a.target='_blank';a.rel='noopener';
  a.href='https://wa.me/'+WA+'?text='+encodeURIComponent('Hello Epitome Designs, I would like to make an enquiry.');a.setAttribute('aria-label','Chat with us on WhatsApp');
  a.innerHTML='<svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 27l1.8-6.2A11.5 11.5 0 1 1 11.4 25.3z"/><path d="M12 11c-.6 1.7.8 4.6 3 6.6s4.6 3.2 6 2.6l1-1.5-2.6-1.5-1.2 1.1c-1-.4-2.7-1.900-3.500-3.300l1-1.200L14.800 9.500z"/></svg>';
