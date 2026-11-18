@@ -1,26 +1,58 @@
 <!doctype html>
-<html lang="en"><head><link rel="icon" href="/favicon.png"><meta charset="utf-8">
+<html lang="en"><head><meta charset="utf-8"><link rel="icon" href="/favicon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Epitome Designs: print quotes, branding, websites</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>Epitome Designs: print quotes, branding, domains, websites</title>
+<meta name="description" content="Business cards, banners, branding, domains and websites. Get a quote in seconds and pay by M-Pesa.">
 <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>:root{--brand:#841813;--brand2:#59100c;--bg:#faf6f4;--ink:#1e1412;--card:#fff;--line:#e6dad6;--muted:#6f5f5a}@media(prefers-color-scheme:dark){:root{--brand:#b5342a;--brand2:#7a1d16;--bg:#171110;--ink:#f4ebe8;--card:#241a18;--line:#3b2c29;--muted:#b3a09b}}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Raleway',system-ui,sans-serif}
-.brand{background:linear-gradient(90deg,var(--brand2),var(--brand));padding:14px 18px}.brand div{max-width:1040px;margin:auto;color:#fff;font-size:1.3rem}.brand img{height:46px;width:auto;display:block}
+<style>
+:root{--brand:#841813;--brand2:#59100c;--bg:#faf6f4;--ink:#1e1412;--card:#fff;--line:#e6dad6;--muted:#6f5f5a}
+@media(prefers-color-scheme:dark){:root{--brand:#b5342a;--brand2:#7a1d16;--bg:#171110;--ink:#f4ebe8;--card:#241a18;--line:#3b2c29;--muted:#b3a09b}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Raleway',system-ui,sans-serif}
+.in{max-width:1040px;margin:auto;padding:0 18px}
+.brand{background:linear-gradient(90deg,var(--brand2),var(--brand));padding:12px 0}.brand .in{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand img{height:46px;width:auto;display:block}nav a{color:#fff;font-weight:600;margin-left:20px;text-decoration:none}nav a:hover{text-decoration:underline}@media(max-width:640px){nav{display:none}}
 input,select,button{font:inherit;border:1.5px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
 button{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:700;cursor:pointer;transition:filter .15s}button:hover{filter:brightness(1.12)}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 45%,transparent);outline-offset:2px}main{max-width:1040px;margin:auto;padding:30px 18px 60px}
-h1{font-size:clamp(2rem,5.5vw,3.4rem);line-height:1.05;margin:.1em 0 .2em;font-weight:800;letter-spacing:-.025em}h1+p{color:var(--muted);margin:0;font-size:1.05rem}h2{font-size:1.25rem;margin:0}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 45%,transparent);outline-offset:2px}
+.hero{position:relative;height:clamp(340px,56vh,480px);overflow:hidden;color:#fff}
+.slide{position:absolute;inset:0;display:flex;align-items:center;opacity:0;visibility:hidden;transition:opacity .6s,visibility 0s .6s}
+.slide.on{opacity:1;visibility:visible;transition-delay:0s}
+.slide{background-size:cover;background-position:right center;background-color:#59100c}.slide::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(35,6,4,.78) 0,rgba(35,6,4,.4) 48%,transparent 75%);pointer-events:none}@media(max-width:640px){.slide{background-position:78% center}.slide::after{background:rgba(35,6,4,.55)}}
+.slide .in{width:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;position:relative;z-index:1}
+.slide h2{font-size:clamp(1.8rem,4.6vw,3rem);line-height:1.08;margin:0 0 10px;font-weight:800;letter-spacing:-.02em;max-width:560px}.slide p{font-size:1.1rem;margin:0 0 20px;max-width:480px;opacity:.92}
+.cta{display:inline-block;padding:12px 22px;border-radius:8px;background:#fff;color:var(--brand2);font-weight:800;text-decoration:none}
+.ic{fill:none;stroke:currentColor;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.big{width:clamp(110px,24vw,250px);flex:none;opacity:.9}
+.arr{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;padding:0;margin:0;border-radius:50%;background:rgba(0,0,0,.28);border:0;font-size:1.6rem;line-height:1;z-index:2}.prev{left:10px}.next{right:10px}
+#dots{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:2}
+#dots button{width:11px;height:11px;padding:0;margin:0;border-radius:50%;background:rgba(255,255,255,.45);border:0}#dots button[aria-current=true]{background:#fff;width:28px;border-radius:6px}
+.sec{padding:40px 0 10px}.sh{font-size:1.6rem;font-weight:800;margin:0 0 16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 6px 20px rgba(30,20,18,.06)}
+.art{position:relative;height:150px;display:grid;place-items:center;background:color-mix(in srgb,var(--brand) 9%,var(--card));color:var(--brand)}.art .ic{width:86px}.art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card h3{margin:14px 14px 2px;font-size:1.05rem}.card p{margin:0 14px;color:var(--muted);font-size:.9rem}.card button{margin:12px 14px 14px;padding:9px}
+.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:34px auto 0}.trust div{padding:14px 16px;border-left:4px solid var(--brand);background:var(--card);border-radius:8px;font-weight:600}
+main{max-width:1040px;margin:auto;padding:36px 18px 60px}
+h1{font-size:clamp(2rem,5.5vw,3.2rem);line-height:1.05;margin:.1em 0 .2em;font-weight:800;letter-spacing:-.025em}h1+p{color:var(--muted);margin:0}h2{font-size:1.25rem;margin:0}
 .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:24px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
 .box{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--brand);border-radius:10px;padding:22px;box-shadow:0 6px 20px rgba(30,20,18,.06)}
-label{display:block;font-weight:600;margin:14px 0 5px;font-size:.92rem}input,select,button{width:100%;padding:11px 12px}input[type=checkbox]{width:auto;margin-right:8px;accent-color:var(--brand)}
-button{margin-top:16px}.total{font-size:2.5rem;font-weight:800}.msg{margin-top:10px;font-weight:600}.soon{border-top-style:dashed;color:var(--muted)}.soon b{display:block;color:var(--ink)}
-.row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.row span:first-child{flex:1;word-break:break-all}.row button{width:auto;margin:0;padding:6px 14px}.note{font-size:.85rem;color:var(--muted)}.lnk{display:block;text-align:center;margin-top:16px;padding:11px;border-radius:8px;background:var(--brand);color:#fff;font-weight:700;text-decoration:none}</style></head><body><header class="brand"><div><img src="/logo-white.png" alt="Epitome Designs" onerror="this.replaceWith(Object.assign(document.createElement('b'),{textContent:'Epitome Designs'}))"></div></header><main>
-
+label{display:block;font-weight:600;margin:14px 0 5px;font-size:.92rem}.box input,.box select,.box button{width:100%;padding:11px 12px}input[type=checkbox]{width:auto!important;margin-right:8px;accent-color:var(--brand)}
+.box button{margin-top:16px}.total{font-size:2.5rem;font-weight:800}.msg{margin-top:10px;font-weight:600}
+.row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.row span:first-child{flex:1;word-break:break-all}.box .row button{width:auto;margin:0;padding:6px 14px}.note{font-size:.85rem;color:var(--muted)}
+.lnk{display:block;text-align:center;margin-top:16px;padding:11px;border-radius:8px;background:var(--brand);color:#fff;font-weight:700;text-decoration:none}
+.foot{background:var(--brand2);color:#fff;text-align:center;padding:30px 18px}.foot img{height:44px}.foot p{margin:8px 0 0;opacity:.85}
+.wa{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:50;transition:transform .15s}.wa:hover{transform:scale(1.07)}
+@media(prefers-reduced-motion:reduce){.slide{transition:none}html{scroll-behavior:auto}}
+</style></head><body>
+<header class="brand"><div class="in"><img src="/logo-white.png" alt="Epitome Designs"><nav><a href="#promos">Popular</a><a href="#quote">Get a quote</a><a href="#domains">Domains</a><a href="/builder.html">Build a website</a></nav></div></header>
+<section class="hero" id="hero" aria-roledescription="carousel" aria-label="Featured services">
+<div id="slides"></div><button class="arr prev" type="button" aria-label="Previous slide">&lsaquo;</button><button class="arr next" type="button" aria-label="Next slide">&rsaquo;</button><div id="dots"></div></section>
+<section class="sec" id="promos"><div class="in"><h2 class="sh">Popular right now</h2><div id="cards" class="cards"></div>
+<div class="trust"><div>20+ years of design and print experience</div><div>Instant quotes, pay securely by M-Pesa</div><div>Design, print, domains and websites in one place</div></div></div></section>
+<main id="quote">
 <h1>Get your print quote in seconds.</h1>
 <p>Prices in KES. Pay a 50% deposit by M-Pesa and we start printing.</p>
 <div class="grid">
-<section class="box" aria-labelledby="q">
-<h2 id="q" style="margin:0">Quote</h2>
+<section class="box" aria-labelledby="q"><h2 id="q">Quote</h2>
 <form id="f">
 <label for="product">Product</label><select id="product"></select>
 <label for="qty">Quantity</label><input id="qty" type="number" min="1" value="100" required>
@@ -28,31 +60,54 @@ button{margin-top:16px}.total{font-size:2.5rem;font-weight:800}.msg{margin-top:1
 <label><input id="design" type="checkbox">I need design help</label>
 <label for="name">Your name</label><input id="name" required autocomplete="name">
 <label for="phone">M-Pesa phone number</label><input id="phone" inputmode="tel" placeholder="0712345678" autocomplete="tel">
-<button>Get my quote</button>
-</form></section>
+<button>Get my quote</button></form></section>
 <section>
 <div class="box" id="res" aria-live="polite"><p style="margin:0">Your price will show here.</p></div>
-<div class="box" style="margin-top:14px"><h2 style="margin:0">Find your domain</h2>
+<div class="box" id="domains" style="margin-top:14px"><h2>Find your domain</h2>
 <label for="dq">Business name or idea</label><input id="dq" placeholder="mybrand">
 <button id="ds" type="button">Search</button><div id="dr" aria-live="polite"></div></div>
 <div class="box" style="margin-top:14px"><h2>Build your website</h2><p class="note" style="margin:6px 0 0">Pick a style, add your details, preview it live and publish for KES 3,000.</p><a class="lnk" href="/builder.html">Start building</a></div>
-</section></div>
+</section></div></main>
+<footer class="foot"><img src="/logo-white.png" alt="Epitome Designs"><p>Design, print and web, all in one place.</p></footer>
 <script>
-const $=id=>document.getElementById(id);let quote=null;
+const WA='254710719980'; // Your WhatsApp number in international format with no + or spaces, e.g. '254712345678'. The green chat button appears once this is set.
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const kes=n=>'KES '+n.toLocaleString('en-KE');let quote=null;
+const ICONS={card:'<rect x="12" y="26" width="62" height="40" rx="5"/><rect x="26" y="40" width="62" height="40" rx="5"/><path d="M36 54h24M36 64h16"/>',
+flyer:'<rect x="24" y="10" width="52" height="80" rx="5"/><path d="M34 26h32M34 40h32M34 52h32M34 64h20"/>',
+banner:'<rect x="26" y="8" width="48" height="70" rx="3"/><path d="M36 24h28M36 36h28M36 48h16M30 86h40M50 78v8"/>',
+sticker:'<circle cx="50" cy="50" r="36"/><path d="M50 30l6 13 14 2-10 10 3 14-13-7-13 7 3-14-10-10 14-2z"/>',
+tshirt:'<path d="M34 14L10 30l10 14 12-6v42h36V38l12 6 10-14L66 14c-3 8-9 12-16 12s-13-4-16-12z"/>',
+globe:'<circle cx="50" cy="50" r="38"/><ellipse cx="50" cy="50" rx="16" ry="38"/><path d="M12 50h76M18 30h64M18 70h64"/>',
+site:'<rect x="8" y="16" width="84" height="68" rx="6"/><path d="M8 32h84M20 46h26v26H20zM56 46h24M56 58h24M56 70h16"/>'};
+const ic=(k,c='')=>`<svg class="ic ${c}" viewBox="0 0 100 100" aria-hidden="true">${ICONS[k]}</svg>`;
+const SLIDES=[{t:'Business cards that get remembered',s:'Premium print, quoted in seconds. Pay by M-Pesa.',b:'Get a quote',h:'#quote',i:'card'},
+{t:'Your business deserves its own domain',s:'Search and order a .co.ke or .com today.',b:'Find a domain',h:'#domains',i:'globe'},
+{t:'Build your website in minutes',s:'Pick a style, add your details and go live.',b:'Start building',h:'/builder.html',i:'site'},
+{t:'Branded T-shirts, banners and more',s:'Merchandise that carries your brand everywhere.',b:'View popular items',h:'#promos',i:'tshirt'}];
+$('slides').innerHTML=SLIDES.map((x,n)=>`<div class="slide${n?'':' on'}" style="background-image:url(/img/slide${n+1}.jpg),linear-gradient(120deg,var(--brand2),var(--brand))" role="group" aria-roledescription="slide" aria-label="${n+1} of ${SLIDES.length}"><div class="in"><div><h2>${esc(x.t)}</h2><p>${esc(x.s)}</p><a class="cta" href="${x.h}">${esc(x.b)}</a></div></div></div>`).join('');
+$('dots').innerHTML=SLIDES.map((_,n)=>`<button type="button" aria-label="Go to slide ${n+1}"></button>`).join('');
+let cur=0,tm;const sl=[...document.querySelectorAll('.slide')],dt=[...$('dots').children];
+const show=n=>{cur=(n+sl.length)%sl.length;sl.forEach((s,i)=>{s.classList.toggle('on',i===cur);s.setAttribute('aria-hidden',i!==cur)});dt.forEach((d,i)=>d.setAttribute('aria-current',i===cur))};
+const play=()=>{clearInterval(tm);if(!matchMedia('(prefers-reduced-motion:reduce)').matches)tm=setInterval(()=>show(cur+1),6000)};
+dt.forEach((d,i)=>d.onclick=()=>{show(i);play()});document.querySelector('.prev').onclick=()=>{show(cur-1);play()};document.querySelector('.next').onclick=()=>{show(cur+1);play()};
+$('hero').onmouseenter=()=>clearInterval(tm);$('hero').onmouseleave=play;show(0);play();
+const PROMOS=[['card','Business cards'],['flyer','Flyers'],['banner','Roll-up banners'],['sticker','Stickers'],['tshirt','Branded T-shirts']];
 fetch('/api/quote').then(r=>r.json()).then(d=>{
  $('product').innerHTML=Object.entries(d.products).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
- $('finish').innerHTML=d.finishes.map(x=>`<option>${x}</option>`).join('')});
-const kes=n=>'KES '+n.toLocaleString('en-KE');
+ $('finish').innerHTML=d.finishes.map(x=>`<option>${x}</option>`).join('');
+ $('cards').innerHTML=PROMOS.filter(p=>d.products[p[0]]).map(([k,t])=>{const m=(d.products[k].match(/\((.*)\)/)||[])[1]||'',u=(d.prices||{})[k];
+  return `<article class="card"><div class="art">${ic(k)}<img src="/img/${k}.jpg" alt="" loading="lazy" onerror="this.remove()"></div><h3>${esc(t)}</h3>${u?`<p>From ${kes(u)} ${esc(m)}</p>`:''}<button type="button" data-k="${k}">Get a quote</button></article>`}).join('')});
+$('cards').onclick=e=>{const k=e.target.dataset.k;if(!k)return;$('product').value=k;$('quote').scrollIntoView({behavior:'smooth'});$('qty').focus({preventScroll:true})};
 $('f').onsubmit=async e=>{e.preventDefault();
  const r=await fetch('/api/quote',{method:'POST',body:JSON.stringify({product:$('product').value,qty:$('qty').value,finish:$('finish').value,design:$('design').checked,name:$('name').value,phone:$('phone').value})});
  const d=await r.json();
- if(!r.ok){$('res').innerHTML=`<p class="msg">${d.error}</p>`;return}
+ if(!r.ok){$('res').innerHTML=`<p class="msg">${esc(d.error)}</p>`;return}
  quote=d;$('res').innerHTML=`<div class="total">${kes(d.total)}</div><p>Deposit now: <b>${kes(d.deposit)}</b></p><button id="pay">Pay deposit with M-Pesa</button><p class="msg" id="pm"></p>`;
  $('pay').onclick=async()=>{$('pm').textContent='Sending request to your phone...';
   const r=await fetch('/api/mpesa',{method:'POST',body:JSON.stringify({id:quote.id,phone:$('phone').value})});
   const x=await r.json();$('pm').textContent=x.message||x.error}};
-
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 $('ds').onclick=async()=>{const r=await fetch('/api/domain?q='+encodeURIComponent($('dq').value));const d=await r.json();
  if(!r.ok){$('dr').innerHTML=`<p class="msg">${esc(d.error)}</p>`;return}
  $('dr').innerHTML=d.results.map(x=>`<div class="row"><span>${esc(x.domain)}</span><span>${x.status==='taken'?'Taken':kes(x.price)+'/yr'}</span>${x.status==='taken'?'':`<button type="button" data-d="${esc(x.domain)}">${x.status==='available'?'Order':'Request'}</button>`}</div>`).join('')+'<p class="note">Requests are confirmed by us before we register.</p>'};
@@ -62,4 +117,8 @@ $('dr').onclick=e=>{const d=e.target.dataset.d;if(!d)return;
   if(!r.ok){$('dm').innerHTML=`<p class="msg">${esc(x.error)}</p>`;return}
   $('dm').innerHTML=`<div class="total">${kes(x.total)}</div><p>Paid in full by M-Pesa.</p><button type="button" id="dpay">Pay with M-Pesa</button><p class="msg" id="dpm"></p>`;
   $('dpay').onclick=async()=>{$('dpm').textContent='Sending request to your phone...';const r=await fetch('/api/mpesa',{method:'POST',body:JSON.stringify({id:x.id,phone:$('dp').value})});const y=await r.json();$('dpm').textContent=y.message||y.error}}};
-</script></main></body></html>
+if(/^\d{11,13}$/.test(WA)){const a=document.createElement('a');a.className='wa';a.target='_blank';a.rel='noopener';
+ a.href='https://wa.me/'+WA+'?text='+encodeURIComponent('Hello Epitome Designs, I would like to make an enquiry.');a.setAttribute('aria-label','Chat with us on WhatsApp');
+ a.innerHTML='<svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 27l1.8-6.2A11.5 11.5 0 1 1 11.4 25.3z"/><path d="M12 11c-.6 1.7.8 4.6 3 6.6s4.6 3.2 6 2.6l1-1.5-2.6-1.5-1.2 1.1c-1-.4-2.7-1.900-3.500-3.300l1-1.200L14.800 9.500z"/></svg>';
+ document.body.appendChild(a)}
+</script></body></html>
