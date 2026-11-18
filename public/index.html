@@ -42,32 +42,34 @@ label{display:block;font-weight:600;margin:14px 0 5px;font-size:.92rem}.box inpu
 .foot{background:var(--brand2);color:#fff;text-align:center;padding:30px 18px}.foot img{height:44px}.foot p{margin:8px 0 0;opacity:.85}
 .wa{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:50;transition:transform .15s}.wa:hover{transform:scale(1.07)}
 @media(prefers-reduced-motion:reduce){.slide{transition:none}html{scroll-behavior:auto}}
-</style></head><body>
-<header class="brand"><div class="in"><img src="/logo-white.png" alt="Epitome Designs"><nav><a href="#promos">Popular</a><a href="#quote">Get a quote</a><a href="#domains">Domains</a><a href="/builder.html">Build a website</a><a href="/track.html">Track order</a></nav></div></header>
+.price{font-size:1.7rem;font-weight:800;margin:6px 14px 0}.price small{font-size:.9rem;color:var(--muted);font-weight:600}.feat{margin:8px 14px;padding-left:18px;color:var(--muted);font-size:.9rem;flex:1}.pop{border:2px solid var(--brand);position:relative}.badge{position:absolute;top:0;right:0;background:var(--brand);color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:0 0 0 8px}#hform .box{max-width:520px}</style></head><body>
+<header class="brand"><div class="in"><img src="/logo-white.png" alt="Epitome Designs"><nav><a href="#promos">Popular</a><a href="#quote">Get a quote</a><a href="#domains">Domains</a><a href="#hosting">Hosting</a><a href="/builder.html">Build a website</a><a href="/track.html">Track order</a></nav></div></header>
 <section class="hero" id="hero" aria-roledescription="carousel" aria-label="Featured services">
 <div id="slides"></div><button class="arr prev" type="button" aria-label="Previous slide">&lsaquo;</button><button class="arr next" type="button" aria-label="Next slide">&rsaquo;</button><div id="dots"></div></section>
-<section class="sec" id="promos"><div class="in"><h2 class="sh">Popular right now</h2><div id="cards" class="cards"></div>
+<section class="sec" id="promos"><div class="in"><h2 class="sh">Popular right now</h2><div id="cards" class="cards"></div><p class="note">All prices include 16% VAT.</p>
 <div class="trust"><div>20+ years of design and print experience</div><div>Instant quotes, pay securely by M-Pesa</div><div>Design, print, domains and websites in one place</div></div></div></section>
 <main id="quote">
 <h1>Get your print quote in seconds.</h1>
-<p>Prices in KES. Pay a 50% deposit by M-Pesa and we start printing.</p>
+<p>All prices are in KES and <b>include 16% VAT</b>. Pay a 70% deposit by M-Pesa and we start printing.</p>
 <div class="grid">
 <section class="box" aria-labelledby="q"><h2 id="q">Quote</h2>
 <form id="f">
 <label for="product">Product</label><select id="product"></select>
-<label for="qty">Quantity</label><input id="qty" type="number" min="1" value="100" required>
+<label for="qty">Quantity</label><input id="qty" type="number" min="1" value="100" required><p class="note" id="tiers"></p>
 <label for="finish">Finish</label><select id="finish"></select>
-<label><input id="design" type="checkbox">I need design help</label>
+<label><input id="design" type="checkbox"><span id="dlab">I need design help</span></label>
+<label for="zone">Delivery</label><select id="zone"></select>
 <label for="name">Your name</label><input id="name" required autocomplete="name">
 <label for="phone">Phone number (for order updates)</label><input id="phone" inputmode="tel" placeholder="0712345678" autocomplete="tel" required>
 <button>Get my quote</button></form></section>
 <section>
 <div class="box" id="res" aria-live="polite"><p style="margin:0">Your price will show here.</p></div>
-<div class="box" id="domains" style="margin-top:14px"><h2>Find your domain</h2>
+<div class="box" id="domains" style="margin-top:14px"><h2>Find your domain</h2><p class="note" style="margin:4px 0 0">Prices include 16% VAT.</p>
 <label for="dq">Business name or idea</label><input id="dq" placeholder="mybrand">
 <button id="ds" type="button">Search</button><div id="dr" aria-live="polite"></div></div>
-<div class="box" style="margin-top:14px"><h2>Build your website</h2><p class="note" style="margin:6px 0 0">Pick a style, add your details, preview it live and publish for KES 3,000.</p><a class="lnk" href="/builder.html">Start building</a></div>
+<div class="box" style="margin-top:14px"><h2>Build your website</h2><p class="note" style="margin:6px 0 0">Pick a style, add your details, preview it live and publish for KES 3,000 (VAT incl.).</p><a class="lnk" href="/builder.html">Start building</a></div>
 </section></div></main>
+<section class="sec" id="hosting"><div class="in"><h2 class="sh">Web hosting plans</h2><p class="note">Shared hosting, billed yearly. Prices include 16% VAT.</p><div id="plans" class="cards"></div><div id="hform" style="margin-top:16px"></div></div></section>
 <footer class="foot"><img src="/logo-white.png" alt="Epitome Designs"><p>Design, print and web, all in one place.</p><p><a href="/track.html" style="color:#fff">Track your order</a></p></footer>
 <script src="/paybox.js"></script>
 <script>
@@ -94,18 +96,32 @@ const show=n=>{cur=(n+sl.length)%sl.length;sl.forEach((s,i)=>{s.classList.toggle
 const play=()=>{clearInterval(tm);if(!matchMedia('(prefers-reduced-motion:reduce)').matches)tm=setInterval(()=>show(cur+1),6000)};
 dt.forEach((d,i)=>d.onclick=()=>{show(i);play()});document.querySelector('.prev').onclick=()=>{show(cur-1);play()};document.querySelector('.next').onclick=()=>{show(cur+1);play()};
 $('hero').onmouseenter=()=>clearInterval(tm);$('hero').onmouseleave=play;show(0);play();
-const PROMOS=[['card','Business cards'],['flyer','Flyers'],['banner','Roll-up banners'],['sticker','Stickers'],['tshirt','Branded T-shirts']];
-fetch('/api/quote').then(r=>r.json()).then(d=>{
- $('product').innerHTML=Object.entries(d.products).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
- $('finish').innerHTML=d.finishes.map(x=>`<option>${x}</option>`).join('');
- $('cards').innerHTML=PROMOS.filter(p=>d.products[p[0]]).map(([k,t])=>{const m=(d.products[k].match(/\((.*)\)/)||[])[1]||'',u=(d.prices||{})[k];
-  return `<article class="card"><div class="art">${ic(k)}<img src="/img/${k}.jpg" alt="" loading="lazy" onerror="this.remove()"></div><h3>${esc(t)}</h3>${u?`<p>From ${kes(u)} ${esc(m)}</p>`:''}<button type="button" data-k="${k}">Get a quote</button></article>`}).join('')});
-$('cards').onclick=e=>{const k=e.target.dataset.k;if(!k)return;$('product').value=k;$('quote').scrollIntoView({behavior:'smooth'});$('qty').focus({preventScroll:true})};
+const PROMOS=['card','flyer','banner','sticker','tshirt'];let CFG=null,HP={};
+const P=()=>CFG.products[$('product').value];
+const tiers=()=>{const p=P();$('tiers').textContent='Price breaks: '+p.breaks.map(b=>b[0]+' for '+kes(b[1])).join(', ');$('qty').min=p.breaks[0][0];$('finish').innerHTML=p.finishes.map(x=>`<option>${x}</option>`).join('')};
+fetch('/api/quote').then(r=>r.json()).then(d=>{CFG=d;
+ $('product').innerHTML=Object.entries(d.products).map(([k,v])=>`<option value="${k}">${esc(v.name)}</option>`).join('');
+ $('zone').innerHTML=Object.entries(d.zones).map(([k,z])=>`<option value="${k}">${esc(z.label)}${z.fee?' ('+kes(z.fee)+')':' (free)'}</option>`).join('');
+ $('dlab').textContent='I need design help (+'+kes(d.designFee)+')';$('qty').value=Object.values(d.products)[0].breaks[0][0];tiers();
+ $('cards').innerHTML=PROMOS.filter(k=>d.products[k]).map(k=>{const p=d.products[k],b=p.breaks[0];
+  return `<article class="card"><div class="art">${ic(k)}<img src="/img/${k}.jpg" alt="" loading="lazy" onerror="this.remove()"></div><h3>${esc(p.name)}</h3><p>From ${kes(b[1])} for ${b[0]} ${esc(p.unit)}</p><button type="button" data-k="${k}">Get a quote</button></article>`}).join('')});
+$('product').onchange=()=>{tiers();$('qty').value=P().breaks[0][0]};
+$('cards').onclick=e=>{const k=e.target.dataset.k;if(!k)return;$('product').value=k;$('product').onchange();$('quote').scrollIntoView({behavior:'smooth'});$('qty').focus({preventScroll:true})};
 $('f').onsubmit=async e=>{e.preventDefault();
- const r=await fetch('/api/quote',{method:'POST',body:JSON.stringify({product:$('product').value,qty:$('qty').value,finish:$('finish').value,design:$('design').checked,name:$('name').value,phone:$('phone').value})});
+ const r=await fetch('/api/quote',{method:'POST',body:JSON.stringify({product:$('product').value,qty:$('qty').value,finish:$('finish').value,design:$('design').checked,zone:$('zone').value,name:$('name').value,phone:$('phone').value})});
  const d=await r.json();
  if(!r.ok){$('res').innerHTML=`<p class="msg">${esc(d.error)}</p>`;return}
- quote=d;$('res').innerHTML=`<div class="total">${kes(d.total)}</div><p>Deposit now: <b>${kes(d.deposit)}</b></p><div id="pbx"></div>`;payBox($('pbx'),d.id,d.deposit)};
+ quote=d;$('res').innerHTML=`<div class="total">${kes(d.total)}</div><p class="note">Includes 16% VAT (${kes(d.vat)})</p>
+ <div class="row"><span>Printing</span><b>${kes(d.items)}</b></div>${d.design?`<div class="row"><span>Design help</span><b>${kes(d.design)}</b></div>`:''}<div class="row"><span>Delivery</span><b>${d.delivery?kes(d.delivery):'Free'}</b></div>
+ <p>Deposit now (70%): <b>${kes(d.deposit)}</b></p><div id="pbx"></div>`;payBox($('pbx'),d.id,d.deposit)};
+fetch('/api/hosting').then(r=>r.json()).then(d=>{HP=d.plans;
+ $('plans').innerHTML=Object.entries(HP).map(([k,p])=>`<article class="card${p.popular?' pop':''}">${p.popular?'<div class="badge">Most popular</div>':''}<h3 style="margin-top:20px">${esc(p.name)}</h3><div class="price">${kes(p.price)}<small>/year</small></div><ul class="feat">${p.features.map(f=>`<li>${esc(f)}</li>`).join('')}</ul><button type="button" data-p="${k}">Choose ${esc(p.name)}</button></article>`).join('')});
+$('plans').onclick=e=>{const k=e.target.dataset.p;if(!k)return;const p=HP[k];
+ $('hform').innerHTML=`<div class="box"><h2>Order ${esc(p.name)} hosting: ${kes(p.price)}/year</h2><label for="hd">Your domain name</label><input id="hd" placeholder="yourbrand.co.ke"><label for="hn">Your name</label><input id="hn" autocomplete="name"><label for="hp">Phone number</label><input id="hp" inputmode="tel" placeholder="0712345678"><label for="he">Email</label><input id="he" type="email"><button type="button" id="hgo">Order ${esc(p.name)}</button><div id="hm" aria-live="polite"></div></div>`;
+ $('hform').scrollIntoView({behavior:'smooth'});
+ $('hgo').onclick=async()=>{const r=await fetch('/api/hosting',{method:'POST',body:JSON.stringify({plan:k,domain:$('hd').value,name:$('hn').value,phone:$('hp').value,email:$('he').value})});const x=await r.json();
+  if(!r.ok){$('hm').innerHTML=`<p class="msg">${esc(x.error)}</p>`;return}
+  $('hm').innerHTML=`<div class="total">${kes(x.total)}</div><p class="note">Includes 16% VAT. Paid in full for 1 year.</p><div id="hpx"></div>`;payBox($('hpx'),x.id,x.total)}};
 $('ds').onclick=async()=>{const r=await fetch('/api/domain?q='+encodeURIComponent($('dq').value));const d=await r.json();
  if(!r.ok){$('dr').innerHTML=`<p class="msg">${esc(d.error)}</p>`;return}
  $('dr').innerHTML=d.results.map(x=>`<div class="row"><span>${esc(x.domain)}</span><span>${x.status==='taken'?'Taken':kes(x.price)+'/yr'+(x.status==='likely'?'<br><small>To be confirmed</small>':'')}</span>${x.status==='taken'?'':`<button type="button" data-d="${esc(x.domain)}">${x.status==='available'?'Order':'Request'}</button>`}</div>`).join('')+'<p class="note">Domains marked To be confirmed are checked with the registry by us before we register them.</p>'};
