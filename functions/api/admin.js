@@ -1,5 +1,5 @@
 // Owner-only endpoints. Protected by the ADMIN_TOKEN secret set in Cloudflare.
-const STATUSES = ['quoted', 'deposit_paid', 'payment_failed', 'in_production', 'ready', 'delivered'];
+const STATUSES = ['quoted', 'payment_submitted', 'deposit_paid', 'payment_failed', 'in_production', 'ready', 'delivered'];
 const authorised = (request, env) => {
   const t = (request.headers.get('Authorization') || '').replace('Bearer ', '');
   return !!env.ADMIN_TOKEN && t.length === env.ADMIN_TOKEN.length && t === env.ADMIN_TOKEN;
@@ -18,5 +18,9 @@ export async function onRequestPost({ request, env }) {
   const { id, status } = await request.json().catch(() => ({}));
   if (!id || !STATUSES.includes(status)) return Response.json({ error: 'Invalid update.' }, { status: 400 });
   await env.DB.prepare('UPDATE quotes SET status=? WHERE id=?').bind(status, id).run();
+  if (status === 'deposit_paid') { // marking a website order as paid puts the site live
+    const q = await env.DB.prepare('SELECT product FROM quotes WHERE id=?').bind(id).first();
+    if (q?.product?.startsWith('site:')) await env.DB.prepare("UPDATE sites SET status='published' WHERE slug=?").bind(q.product.slice(5)).run();
+  }
   return Response.json({ ok: true });
 }
