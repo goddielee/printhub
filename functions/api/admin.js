@@ -9,7 +9,7 @@ const deny = () => Response.json({ error: 'Wrong access key.' }, { status: 401 }
 export async function onRequestGet({ request, env }) {
   if (!authorised(request, env)) return deny();
   const { results } = await env.DB.prepare(
-    'SELECT id,product,qty,finish,design,total,name,phone,status,receipt,created FROM quotes ORDER BY id DESC LIMIT 200').all();
+    'SELECT id,product,qty,finish,design,total,name,phone,delivery,status,receipt,created FROM quotes ORDER BY id DESC LIMIT 200').all();
   return Response.json({ orders: results, statuses: STATUSES });
 }
 
