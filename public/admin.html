@@ -7,10 +7,10 @@
 .brand{background:linear-gradient(90deg,var(--brand2),var(--brand));padding:14px 18px}.brand div{max-width:1040px;margin:auto;color:#fff;font-size:1.3rem}.brand img{height:46px;width:auto;display:block}
 input,select,button{font:inherit;border:1.5px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
 button{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:700;cursor:pointer;transition:filter .15s}button:hover{filter:brightness(1.12)}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 45%,transparent);outline-offset:2px}main{max-width:1100px;margin:auto;padding:22px 14px 50px}h1{margin:0 0 14px;font-size:1.8rem;font-weight:800}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 45%,transparent);outline-offset:2px}main{max-width:1500px;margin:auto;padding:22px 14px 50px}h1{margin:0 0 14px;font-size:1.8rem;font-weight:800}
 .bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}input,select,button{padding:9px 11px}
-.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;background:var(--card);min-width:980px}
-th{background:var(--brand);color:#fff}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.paid{color:#2e9e5e;font-weight:700}#msg{font-weight:600;margin:0 0 8px;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:5}.nb{display:inline-block;padding:6px 10px;border-radius:8px;background:#25d366;color:#04361a;font-weight:700;text-decoration:none;font-size:.85rem}</style></head><body><header class="brand"><div><img src="/logo-white.png" alt="Epitome Designs" onerror="this.replaceWith(Object.assign(document.createElement('b'),{textContent:'Epitome Designs'}))"></div></header><main>
+.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;background:var(--card);min-width:900px}
+th{background:var(--brand);color:#fff}th,td{overflow-wrap:anywhere;padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.paid{color:#2e9e5e;font-weight:700}#msg{font-weight:600;margin:0 0 8px;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:5}.nb{display:inline-block;padding:6px 10px;border-radius:8px;background:#25d366;color:#04361a;font-weight:700;text-decoration:none;font-size:.85rem}</style></head><body><header class="brand"><div><img src="/logo-white.png" alt="Epitome Designs" onerror="this.replaceWith(Object.assign(document.createElement('b'),{textContent:'Epitome Designs'}))"></div></header><main>
 <h1>Orders</h1>
 <div class="bar">
 <input id="key" type="password" placeholder="Access key" aria-label="Access key">
@@ -43,7 +43,7 @@ function msgFor(o){const h=`Hello ${first(o)}, `,i=`order #${o.id} (${item(o)})`
  ready:`${h}good news! ${i} is ready. Please tell us whether you will collect or want delivery.`,
  delivered:`${h}thank you for choosing Epitome Designs! ${i} is complete. We would love your feedback.`};
  return m[o.status]||''}
-const notify=o=>{const u=wa(o.phone);return u?`<a class="nb" href="${esc(u)}?text=${encodeURIComponent(msgFor(o))}" target="_blank" rel="noopener">WhatsApp</a>`:'-'};
+const notify=o=>{const u=wa(o.phone);return u?`<a class="nb" href="${esc(u)}?text=${encodeURIComponent(msgFor(o))}" target="_blank" rel="noopener">Chat</a>`:'-'};
 function draw(){const f=$('filter').value;
  $('rows').innerHTML=data.filter(o=>!f||o.status===f).map(o=>`<tr>
  <td>${o.id}</td>
