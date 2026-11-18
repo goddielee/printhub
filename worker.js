@@ -7,9 +7,10 @@ import * as domain from './functions/api/domain.js';
 import * as site from './functions/api/site.js';
 import * as pay from './functions/api/pay.js';
 import * as track from './functions/api/track.js';
+import * as hosting from './functions/api/hosting.js';
 import { renderSite } from './functions/render.js';
 
-const routes = { '/api/quote': quote, '/api/mpesa': mpesa, '/api/callback': callback, '/api/admin': admin, '/api/domain': domain, '/api/site': site, '/api/pay': pay, '/api/track': track };
+const routes = { '/api/quote': quote, '/api/mpesa': mpesa, '/api/callback': callback, '/api/admin': admin, '/api/domain': domain, '/api/site': site, '/api/pay': pay, '/api/track': track, '/api/hosting': hosting };
 
 export default {
   async fetch(request, env) {
