@@ -2,6 +2,7 @@
 // Quantities between breaks are priced at the lower break's unit price, but never above the next break's total.
 export const VAT = 0.16, DEPOSIT = 0.7, DESIGN_FEE = 1000;
 export const FINISH = { standard: 1, matte: 1.1, laminated: 1.25 };
+export const DOMAINS = { com: 1800, 'co.ke': 1200, org: 2000, net: 2200 }; // KES per year, VAT inclusive
 export const PRODUCTS = {
   card:    { name: 'Business cards', unit: 'cards', finishes: ['standard', 'matte', 'laminated'], breaks: [[100, 900], [250, 1900], [500, 3200], [1000, 5500]] },
   flyer:   { name: 'A5 flyers (full colour)', unit: 'flyers', finishes: ['standard', 'matte', 'laminated'], breaks: [[100, 1200], [250, 2250], [500, 3500], [1000, 5500], [2500, 11000]] },
