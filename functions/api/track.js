@@ -16,7 +16,7 @@ export async function onRequestGet({ request, env }) {
   const u = new URL(request.url), id = Number(u.searchParams.get('id')), phone = last9(u.searchParams.get('phone'));
   const nope = () => json({ error: 'We could not find that order. Check the order number and the phone number you used.' }, 404);
   if (!Number.isInteger(id) || id < 1 || phone.length < 9) return nope();
-  const o = await env.DB.prepare('SELECT id,product,qty,finish,total,phone,status,created FROM quotes WHERE id=?').bind(id).first();
+  const o = await env.DB.prepare('SELECT id,product,qty,finish,total,phone,status,created,balance_code FROM quotes WHERE id=?').bind(id).first();
   if (!o || last9(o.phone) !== phone) return nope();
 
   const s = o.status, full = ['domain', 'site', 'hosting'].includes(o.finish), dep = Math.ceil(o.total * DEPOSIT);
@@ -33,6 +33,7 @@ export async function onRequestGet({ request, env }) {
   let due = 0, dueLabel = '';
   if (EARLY.includes(s)) { due = full ? o.total : dep; dueLabel = full ? 'Amount due' : 'Deposit due'; }
   else if (!full && ['deposit_paid', 'in_production', 'ready'].includes(s)) { due = o.total - dep; dueLabel = 'Balance due on collection or delivery'; }
+  const canPayBalance = !full && ['deposit_paid', 'in_production', 'ready'].includes(s);
   const item = o.product.startsWith('domain:') ? 'Domain ' + o.product.slice(7) : o.product.startsWith('hosting:') ? 'Hosting ' + o.product.slice(8).replace(':', ' for ') : isSite ? 'Website' : `${o.qty} x ${o.product}`;
-  return json({ id: o.id, item, label: link ? 'Your website is live' : (LABEL[s] || s), steps: full ? OTHER : PRINT, step, total: o.total, due, dueLabel, created: o.created, link });
+  return json({ id: o.id, item, label: link ? 'Your website is live' : (LABEL[s] || s), steps: full ? OTHER : PRINT, step, total: o.total, due, dueLabel, created: o.created, link, canPayBalance, balanceSubmitted: canPayBalance && !!o.balance_code });
 }

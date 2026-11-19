@@ -1,5 +1,5 @@
 // Domain search + order. Prices are KES per year and are PLACEHOLDERS: edit to your registrar cost + margin.
-const PRICES = { com: 1800, 'co.ke': 1200, org: 2000, net: 2200 };
+import { DOMAINS as PRICES } from '../pricing.js';
 const RDAP = ['com', 'org', 'net']; // endings with a registry lookup; others (e.g. co.ke) stay 'likely' until you confirm
 const NAME = /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/;
 const json = (d, s = 200) => Response.json(d, { status: s });
