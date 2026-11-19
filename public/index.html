@@ -114,14 +114,20 @@ $('f').onsubmit=async e=>{e.preventDefault();
  quote=d;$('res').innerHTML=`<div class="total">${kes(d.total)}</div><p class="note">Includes 16% VAT (${kes(d.vat)})</p>
  <div class="row"><span>Printing</span><b>${kes(d.items)}</b></div>${d.design?`<div class="row"><span>Design help</span><b>${kes(d.design)}</b></div>`:''}<div class="row"><span>Delivery</span><b>${d.delivery?kes(d.delivery):'Free'}</b></div>
  <p>Deposit now (70%): <b>${kes(d.deposit)}</b></p><div id="pbx"></div>`;payBox($('pbx'),d.id,d.deposit)};
-fetch('/api/hosting').then(r=>r.json()).then(d=>{HP=d.plans;
+let DOM={};
+fetch('/api/hosting').then(r=>r.json()).then(d=>{HP=d.plans;DOM=d.domains;
  $('plans').innerHTML=Object.entries(HP).map(([k,p])=>`<article class="card${p.popular?' pop':''}">${p.popular?'<div class="badge">Most popular</div>':''}<h3 style="margin-top:20px">${esc(p.name)}</h3><div class="price">${kes(p.price)}<small>/year</small></div><ul class="feat">${p.features.map(f=>`<li>${esc(f)}</li>`).join('')}</ul><button type="button" data-p="${k}">Choose ${esc(p.name)}</button></article>`).join('')});
 $('plans').onclick=e=>{const k=e.target.dataset.p;if(!k)return;const p=HP[k];
- $('hform').innerHTML=`<div class="box"><h2>Order ${esc(p.name)} hosting: ${kes(p.price)}/year</h2><label for="hd">Your domain name</label><input id="hd" placeholder="yourbrand.co.ke"><label for="hn">Your name</label><input id="hn" autocomplete="name"><label for="hp">Phone number</label><input id="hp" inputmode="tel" placeholder="0712345678"><label for="he">Email</label><input id="he" type="email"><button type="button" id="hgo">Order ${esc(p.name)}</button><div id="hm" aria-live="polite"></div></div>`;
- $('hform').scrollIntoView({behavior:'smooth'});
- $('hgo').onclick=async()=>{const r=await fetch('/api/hosting',{method:'POST',body:JSON.stringify({plan:k,domain:$('hd').value,name:$('hn').value,phone:$('hp').value,email:$('he').value})});const x=await r.json();
+ $('hform').innerHTML=`<div class="box"><h2>Order ${esc(p.name)} hosting</h2><label for="hd">Your domain name</label><input id="hd" placeholder="yourbrand.co.ke">
+ <label><input id="hr" type="checkbox">Register this domain for me too</label>
+ <label for="hs">Website from our builder (optional)</label><input id="hs" placeholder="Paste the edit link from the website builder">
+ <label for="hn">Your name</label><input id="hn" autocomplete="name"><label for="hp">Phone number</label><input id="hp" inputmode="tel" placeholder="0712345678"><label for="he">Email</label><input id="he" type="email">
+ <p class="total" id="ht"></p><p class="note">Includes 16% VAT. Paid in full for 1 year.</p><button type="button" id="hgo">Order ${esc(p.name)}</button><div id="hm" aria-live="polite"></div></div>`;
+ const calc=()=>{const t=$('hd').value.toLowerCase().split('.').slice(1).join('.'),f=$('hr').checked?(DOM[t]||0):0;$('ht').textContent=kes(p.price+f)+(f?' (hosting + domain)':'')};
+ ['input','change'].forEach(v=>{$('hd').addEventListener(v,calc);$('hr').addEventListener(v,calc)});calc();$('hform').scrollIntoView({behavior:'smooth'});
+ $('hgo').onclick=async()=>{const r=await fetch('/api/hosting',{method:'POST',body:JSON.stringify({plan:k,domain:$('hd').value,register:$('hr').checked,site:$('hs').value,name:$('hn').value,phone:$('hp').value,email:$('he').value})});const x=await r.json();
   if(!r.ok){$('hm').innerHTML=`<p class="msg">${esc(x.error)}</p>`;return}
-  $('hm').innerHTML=`<div class="total">${kes(x.total)}</div><p class="note">Includes 16% VAT. Paid in full for 1 year.</p><div id="hpx"></div>`;payBox($('hpx'),x.id,x.total)}};
+  $('hm').innerHTML=`<div class="total">${kes(x.total)}</div><div id="hpx"></div>`;payBox($('hpx'),x.id,x.total)}};
 $('ds').onclick=async()=>{const r=await fetch('/api/domain?q='+encodeURIComponent($('dq').value));const d=await r.json();
  if(!r.ok){$('dr').innerHTML=`<p class="msg">${esc(d.error)}</p>`;return}
  $('dr').innerHTML=d.results.map(x=>`<div class="row"><span>${esc(x.domain)}</span><span>${x.status==='taken'?'Taken':kes(x.price)+'/yr'+(x.status==='likely'?'<br><small>To be confirmed</small>':'')}</span>${x.status==='taken'?'':`<button type="button" data-d="${esc(x.domain)}">${x.status==='available'?'Order':'Request'}</button>`}</div>`).join('')+'<p class="note">Domains marked To be confirmed are checked with the registry by us before we register them.</p>'};

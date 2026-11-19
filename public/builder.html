@@ -49,7 +49,7 @@ const post=b=>fetch('/api/site',{method:'POST',body:JSON.stringify(b)});
 let t;const prev=()=>{clearTimeout(t);t=setTimeout(async()=>{$('pv').srcdoc=await(await post({action:'preview',data:data()})).text()},350)};
 F.forEach(k=>$(k).addEventListener('input',prev));
 function info(){if(!site)return;const edit=`${location.origin}/builder.html?slug=${site.slug}&key=${site.key}`;
- $('info').textContent=(status==='published'?'LIVE: '+location.origin+'/s/'+site.slug+'. ':'Draft. Goes live at '+location.origin+'/s/'+site.slug+' after payment. ')+'Bookmark this link to edit later: '+edit}
+ $('info').textContent=(status==='published'?'LIVE: '+location.origin+'/s/'+site.slug+'. ':'Draft. Goes live at '+location.origin+'/s/'+site.slug+' after payment. ')+'Bookmark this link to edit later: '+edit+'  (To put this site on your own domain, order a hosting plan on our home page and paste this link there.)'}
 async function load(){if(!site)return prev();
  const r=await fetch(`/api/site?slug=${site.slug}&key=${site.key}`);if(!r.ok){site=null;return prev()}
  const d=await r.json();status=d.status;F.forEach(k=>$(k).value=k==='services'?d.data.services.join('\n'):(d.data[k]??''));
@@ -62,6 +62,6 @@ $('save').onclick=save;
 $('pub').onclick=async()=>{if(!await save())return;
  const r=await post({action:'publish',slug:site.slug,key:site.key,phone:$('phone').value});const d=await r.json();
  if(!r.ok){$('msg').textContent=d.error;return}
- $('msg').textContent='';payBox($('pbx'),d.id,d.total)};
+ $('msg').textContent='Your site goes live as soon as we confirm your payment.';payBox($('pbx'),d.id,d.total)};
 load();
 </script></main></body></html>

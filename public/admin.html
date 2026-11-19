@@ -35,6 +35,7 @@ const dep=o=>Math.ceil(o.total*0.7)/* deposit is 70% */,early=o=>['quoted','paym
 const expectText=o=>early(o)?(full(o)?o.total:dep(o)).toLocaleString('en-KE')+(full(o)?'':' (deposit)'):(full(o)||['balance_paid','delivered'].includes(o.status))?'Paid':(o.total-dep(o)).toLocaleString('en-KE')+' (balance)';
 const first=o=>String(o.name||'').replace(/\s*\(.*\)\s*$/,'').split(' ')[0]||'there';
 const item=o=>o.product.startsWith('domain:')?'domain '+o.product.slice(7):o.product.startsWith('site:')?'website':o.product.startsWith('hosting:')?'hosting '+o.product.slice(8).replace(':',' for '):o.qty+' x '+o.product;
+const bal=o=>(o.total-dep(o)).toLocaleString('en-KE'),slugOf=o=>o.site_slug||(o.product.startsWith('site:')?o.product.slice(5):'');
 function msgFor(o){const h=`Hello ${first(o)}, `,i=`order #${o.id} (${item(o)})`,site=o.product.startsWith('site:')?` Your site is live at ${location.origin}/s/${o.product.slice(5)}`:'';
  const m={quoted:`${h}your ${i} is waiting for payment. Reply here if you need help paying.`,
  payment_submitted:`${h}we have received your payment details for ${i}. We are confirming and will update you shortly.`,
@@ -42,7 +43,7 @@ function msgFor(o){const h=`Hello ${first(o)}, `,i=`order #${o.id} (${item(o)})`
  payment_failed:`${h}we could not confirm the payment for ${i}. Please check the M-Pesa code and reply here.`,
  in_production:`${h}${i} is now in production. We will let you know when it is ready.`,
  balance_paid:`${h}we have received the balance for ${i}. Thank you, it is now fully paid.`,
- ready:`${h}good news! ${i} is ready. Please tell us whether you will collect or want delivery.`,
+ ready:`${h}good news! ${i} is ready. Please clear the balance of KES ${bal(o)} so we can hand it over or dispatch it. Pay here: ${location.origin}/track.html (use order number ${o.id} and your phone number). Then tell us if you will collect or want delivery.`,
  delivered:`${h}thank you for choosing Epitome Designs! ${i} is complete. We would love your feedback.`};
  return m[o.status]||''}
 const notify=o=>{const u=wa(o.phone);return u?`<a class="nb" href="${esc(u)}?text=${encodeURIComponent(msgFor(o))}" target="_blank" rel="noopener">Chat</a>`:'-'};
@@ -50,13 +51,16 @@ function draw(){const f=$('filter').value;
  $('rows').innerHTML=data.filter(o=>!f||o.status===f).map(o=>`<tr>
  <td>${o.id}</td>
  <td>${esc(o.name)}<br>${wa(o.phone)?`<a href="${esc(wa(o.phone))}" target="_blank" rel="noopener">${esc(o.phone)}</a>`:'-'}</td>
- <td>${esc(o.product)} x ${o.qty}<br>${esc(o.finish)}${o.design?', design help':''}${o.delivery?'<br>Delivery: '+esc(o.delivery):''}</td>
+ <td>${esc(o.product)} x ${o.qty}<br>${esc(o.finish)}${o.design?', design help':''}${o.delivery?'<br>Delivery: '+esc(o.delivery):''}${o.notes?'<br>'+esc(o.notes):''}${slugOf(o)?`<br><a href="#" class="nb" data-s="${esc(slugOf(o))}">Download site</a>`:''}</td>
  <td>${o.total.toLocaleString('en-KE')}</td>
  <td>${expectText(o)}</td>
  <td><select data-id="${o.id}" aria-label="Status for order ${o.id}">${statuses.map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}</select></td>
- <td class="${['deposit_paid','in_production','ready','balance_paid','delivered'].includes(o.status)?'paid':''}">${esc(o.receipt)||'-'}</td><td>${esc(o.created)}</td><td>${notify(o)}</td></tr>`).join('')}
+ <td class="${['deposit_paid','in_production','ready','balance_paid','delivered'].includes(o.status)?'paid':''}">${esc(o.receipt)||'-'}${o.balance_code?'<br><b>Balance code: '+esc(o.balance_code)+'</b>':''}</td><td>${esc(o.created)}</td><td>${notify(o)}</td></tr>`).join('')}
 $('rows').onchange=async e=>{const id=e.target.dataset.id;if(!id)return;
  const r=await fetch('/api/admin',{method:'POST',headers:auth(),body:JSON.stringify({id:+id,status:e.target.value})});
  $('msg').textContent=r.ok?'Order '+id+' saved as '+e.target.value+'.':'Update failed.';if(r.ok){data.find(o=>o.id==id).status=e.target.value;draw()}};
+$('rows').addEventListener('click',async e=>{const s=e.target.dataset.s;if(!s)return;e.preventDefault();
+ const r=await fetch('/api/admin?export='+encodeURIComponent(s),{headers:auth()});if(!r.ok){$('msg').textContent='Download failed.';return}
+ const a=document.createElement('a');a.href=URL.createObjectURL(await r.blob());a.download=s+'-index.html';a.click();$('msg').textContent='Downloaded '+s+'. Upload it as index.html in the client\'s hosting.'});
 $('load').onclick=load;$('filter').onchange=draw;
 </script></main></body></html>
