@@ -15,7 +15,7 @@ const routes = { '/api/quote': quote, '/api/mpesa': mpesa, '/api/callback': call
 export default {
   async fetch(request, env) {
     const { pathname } = new URL(request.url);
-    if (pathname.startsWith('/s/')) return serveSite(pathname.slice(3).replace(/\/$/, ''), env);
+    if (pathname.startsWith('/s/')) return serveSite(pathname.slice(3).replace(/\/$/, ''), env, new URL(request.url).origin);
     const mod = routes[pathname];
     if (!mod) return env.ASSETS.fetch(request);
     const handler = request.method === 'GET' ? mod.onRequestGet : request.method === 'POST' ? mod.onRequestPost : null;
@@ -23,9 +23,9 @@ export default {
   },
 };
 
-async function serveSite(slug, env) {
+async function serveSite(slug, env, origin) {
   const s = /^[a-z0-9-]+$/.test(slug) ? await env.DB.prepare('SELECT data,status FROM sites WHERE slug=?').bind(slug).first() : null;
   const html = (b, st) => new Response(b, { status: st, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
-  if (s && s.status === 'published') return html(renderSite(JSON.parse(s.data)), 200);
+  if (s && s.status === 'published') return html(renderSite(JSON.parse(s.data), origin), 200);
   return html('<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><body style="font:18px system-ui;text-align:center;padding:80px 20px"><h1>This site is not live yet</h1><p>Please check back soon.</p>', 404);
 }
