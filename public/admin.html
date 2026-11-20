@@ -27,14 +27,15 @@ const auth=()=>({Authorization:'Bearer '+$('key').value});
 async function load(){
  const r=await fetch('/api/admin',{headers:auth()});const d=await r.json();
  if(!r.ok){$('msg').textContent=d.error;return}
- data=d.orders;statuses=d.statuses;
- $('filter').innerHTML='<option value="">All statuses</option>'+statuses.map(s=>`<option>${s}</option>`).join('');
- $('msg').textContent=data.length+' orders loaded.';draw()}
+ const cur=$('filter').value;data=d.orders;statuses=d.statuses;
+ $('filter').innerHTML='<option value="">All statuses</option><option value="__todo">Needs action</option>'+statuses.map(s=>`<option>${s}</option>`).join('');$('filter').value=cur;const n=data.filter(todo).length;document.title=(n?'('+n+') ':'')+'Epitome Designs: orders';
+ $('msg').textContent=data.length+' orders loaded. '+n+' need action.';draw()}
 const full=o=>['domain','site','hosting'].includes(o.finish);
 const dep=o=>Math.ceil(o.total*0.7)/* deposit is 70% */,early=o=>['quoted','payment_submitted','payment_failed'].includes(o.status);
 const expectText=o=>early(o)?(full(o)?o.total:dep(o)).toLocaleString('en-KE')+(full(o)?'':' (deposit)'):(full(o)||['balance_paid','delivered'].includes(o.status))?'Paid':(o.total-dep(o)).toLocaleString('en-KE')+' (balance)';
 const first=o=>String(o.name||'').replace(/\s*\(.*\)\s*$/,'').split(' ')[0]||'there';
 const item=o=>o.product.startsWith('domain:')?'domain '+o.product.slice(7):o.product.startsWith('site:')?'website':o.product.startsWith('hosting:')?'hosting '+o.product.slice(8).replace(':',' for '):o.qty+' x '+o.product;
+const todo=o=>o.status==='payment_submitted'||(o.balance_code&&!['balance_paid','delivered'].includes(o.status));
 const bal=o=>(o.total-dep(o)).toLocaleString('en-KE'),slugOf=o=>o.site_slug||(o.product.startsWith('site:')?o.product.slice(5):'');
 function msgFor(o){const h=`Hello ${first(o)}, `,i=`order #${o.id} (${item(o)})`,site=o.product.startsWith('site:')?` Your site is live at ${location.origin}/s/${o.product.slice(5)}`:'';
  const m={quoted:`${h}your ${i} is waiting for payment. Reply here if you need help paying.`,
@@ -48,7 +49,7 @@ function msgFor(o){const h=`Hello ${first(o)}, `,i=`order #${o.id} (${item(o)})`
  return m[o.status]||''}
 const notify=o=>{const u=wa(o.phone);return u?`<a class="nb" href="${esc(u)}?text=${encodeURIComponent(msgFor(o))}" target="_blank" rel="noopener">Chat</a>`:'-'};
 function draw(){const f=$('filter').value;
- $('rows').innerHTML=data.filter(o=>!f||o.status===f).map(o=>`<tr>
+ $('rows').innerHTML=data.filter(o=>!f||(f==='__todo'?todo(o):o.status===f)).map(o=>`<tr>
  <td>${o.id}</td>
  <td>${esc(o.name)}<br>${wa(o.phone)?`<a href="${esc(wa(o.phone))}" target="_blank" rel="noopener">${esc(o.phone)}</a>`:'-'}</td>
  <td>${esc(o.product)} x ${o.qty}<br>${esc(o.finish)}${o.design?', design help':''}${o.delivery?'<br>Delivery: '+esc(o.delivery):''}${o.notes?'<br>'+esc(o.notes):''}${slugOf(o)?`<br><a href="#" class="nb" data-s="${esc(slugOf(o))}">Download site</a>`:''}</td>
