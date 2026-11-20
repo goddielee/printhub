@@ -24,22 +24,30 @@ iframe{width:100%;height:78vh;min-height:480px;border:1px solid var(--line);bord
 <main><h1>Build your website</h1><p class="sub">Fill in your details and watch your site appear. Publish when you're happy.</p>
 <div class="grid"><section class="box" aria-label="Your details">
 <label for="owner">Your name</label><input id="owner" autocomplete="name">
-<label for="template">Style</label><select id="template"><option value="clean">Clean (white)</option><option value="bold">Bold (colour header)</option></select>
+<label for="template">Style</label><select id="template"><option value="modern">Modern (light and airy)</option><option value="bold">Bold (strong colour header)</option><option value="elegant">Elegant (dark and refined)</option></select>
 <label for="color">Brand colour</label><input id="color" type="color" value="#841813">
 <label for="name">Business name</label><input id="name" maxlength="60">
 <label for="tagline">Tagline</label><input id="tagline" maxlength="120">
 <label for="about">About your business</label><textarea id="about" maxlength="800"></textarea>
-<label for="services">Services (one per line, up to 8)</label><textarea id="services"></textarea>
+<label for="services">Services: one per line as Title | short description (up to 9)</label><textarea id="services"></textarea>
 <label for="phone">Phone / WhatsApp (also used for M-Pesa)</label><input id="phone" inputmode="tel" placeholder="0712345678">
 <label for="email">Email</label><input id="email" type="email">
 <label for="address">Address</label><input id="address" maxlength="120">
+<label for="reviews">Customer reviews: one per line as Review | Name (up to 3)</label><textarea id="reviews"></textarea>
+<label for="hours">Opening hours (one per line)</label><textarea id="hours" placeholder="Mon-Fri: 8am - 6pm&#10;Sat: 9am - 2pm"></textarea>
+<label for="heroImage">Main photo link (optional, must start with https://)</label><input id="heroImage" placeholder="https://...">
+<label for="logo">Logo link (optional, must start with https://)</label><input id="logo" placeholder="https://...">
+<label for="facebook">Facebook page link</label><input id="facebook" placeholder="https://facebook.com/...">
+<label for="instagram">Instagram link</label><input id="instagram" placeholder="https://instagram.com/...">
+<label for="tiktok">TikTok link</label><input id="tiktok" placeholder="https://tiktok.com/@...">
+<label for="x">X (Twitter) link</label><input id="x" placeholder="https://x.com/...">
 <button id="save" type="button">Save draft</button>
 <button id="pub" type="button">Publish for KES 3,000 (VAT incl.)</button>
 <div id="pbx"></div><p id="msg" aria-live="polite"></p><p id="info"></p></section>
 <section><iframe id="pv" title="Live preview" sandbox=""></iframe></section></div>
 <script src="/paybox.js"></script>
 <script>
-const $=id=>document.getElementById(id),F=['name','tagline','about','services','phone','email','address','color','template'];
+const $=id=>document.getElementById(id),F=['name','tagline','about','services','reviews','hours','phone','email','address','color','template','heroImage','logo','facebook','instagram','tiktok','x'];
 const ok=(s,r)=>r.test(s||'');let site=null,status='draft';
 try{site=JSON.parse(localStorage.getItem('ph_site')||'null')}catch{}
 const q=new URLSearchParams(location.search);if(q.get('slug'))site={slug:q.get('slug'),key:q.get('key')};
@@ -52,7 +60,8 @@ function info(){if(!site)return;const edit=`${location.origin}/builder.html?slug
  $('info').textContent=(status==='published'?'LIVE: '+location.origin+'/s/'+site.slug+'. ':'Draft. Goes live at '+location.origin+'/s/'+site.slug+' after payment. ')+'Bookmark this link to edit later: '+edit+'  (To put this site on your own domain, order a hosting plan on our home page and paste this link there.)'}
 async function load(){if(!site)return prev();
  const r=await fetch(`/api/site?slug=${site.slug}&key=${site.key}`);if(!r.ok){site=null;return prev()}
- const d=await r.json();status=d.status;F.forEach(k=>$(k).value=k==='services'?d.data.services.join('\n'):(d.data[k]??''));
+ const d=await r.json();status=d.status;const L={services:s=>typeof s==='string'?s:(s.d?s.t+' | '+s.d:s.t),reviews:s=>typeof s==='string'?s:(s.n?s.q+' | '+s.n:s.q),hours:s=>s};
+ F.forEach(k=>$(k).value=L[k]?(d.data[k]||[]).map(L[k]).join('\n'):(d.data[k]??''));if(!$('template').value)$('template').value='modern';
  $('owner').value=d.owner||'';info();prev()}
 async function save(){const r=await post({action:'save',data:data(),owner:$('owner').value,...(site||{})});const d=await r.json();
  if(!r.ok){$('msg').textContent=d.error;return false}
