@@ -13,7 +13,7 @@ export async function onRequestGet({ request, env }) {
 
 export async function onRequestPost({ request, env }) {
   const b = await request.json().catch(() => ({}));
-  if (b.action === 'preview') return new Response(renderSite(b.data), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+  if (b.action === 'preview') return new Response(renderSite(b.data, new URL(request.url).origin), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
 
   if (b.action === 'save') {
     const d = clean(b.data), owner = String(b.owner || '').trim().slice(0, 60);

@@ -13,7 +13,7 @@ export async function onRequestGet({ request, env }) {
   if (ex) { // download a client's website as a ready-to-upload index.html
     const s = await env.DB.prepare('SELECT data FROM sites WHERE slug=?').bind(ex).first();
     if (!s) return json({ error: 'Site not found.' }, 404);
-    return new Response(renderSite(JSON.parse(s.data)), { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Content-Disposition': `attachment; filename="${ex.replace(/[^a-z0-9-]/g, '')}-index.html"` } });
+    return new Response(renderSite(JSON.parse(s.data), new URL(request.url).origin), { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Content-Disposition': `attachment; filename="${ex.replace(/[^a-z0-9-]/g, '')}-index.html"` } });
   }
   const { results } = await env.DB.prepare(
     'SELECT id,product,qty,finish,design,total,name,phone,delivery,notes,site_slug,balance_code,status,receipt,created FROM quotes ORDER BY id DESC LIMIT 200').all();
